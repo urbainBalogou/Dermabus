@@ -45,4 +45,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Screenings performed by the agent.
+     */
+    public function screenings()
+    {
+        return $this->hasMany(Screening::class);
+    }
 }
