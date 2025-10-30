@@ -1,0 +1,194 @@
+@php $patientModel = $patient ?? null; @endphp
+@php $agentOptions = $agents ?? \App\Models\User::orderBy('name')->pluck('name', 'id'); @endphp
+
+@csrf
+@if(isset($patientModel))
+    @method('PUT')
+@endif
+
+<div class="grid gap-6 md:grid-cols-2">
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="full_name">Nom complet *</label>
+        <input type="text" name="full_name" id="full_name" value="{{ old('full_name', $patientModel->full_name ?? '') }}" required class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('full_name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="external_id">Identifiant terrain</label>
+        <input type="text" name="external_id" id="external_id" value="{{ old('external_id', $patientModel->external_id ?? '') }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('external_id') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="reference_code">Référence DermaBus+</label>
+        <input type="text" name="reference_code" id="reference_code" value="{{ old('reference_code', $patientModel->reference_code ?? '') }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('reference_code') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="portal_code">Code portail patient</label>
+        <input type="text" name="portal_code" id="portal_code" value="{{ old('portal_code', $patientModel->portal_code ?? '') }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('portal_code') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="date_of_birth">Date de naissance</label>
+        <input type="date" name="date_of_birth" id="date_of_birth" value="{{ old('date_of_birth', $patientModel?->date_of_birth?->format('Y-m-d')) }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('date_of_birth') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="gender">Genre</label>
+        <select name="gender" id="gender" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500">
+            <option value="">Sélectionner</option>
+            <option value="female" @selected(old('gender', $patientModel->gender ?? '') === 'female')>Femme</option>
+            <option value="male" @selected(old('gender', $patientModel->gender ?? '') === 'male')>Homme</option>
+            <option value="other" @selected(old('gender', $patientModel->gender ?? '') === 'other')>Autre</option>
+        </select>
+        @error('gender') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="phone">Téléphone</label>
+        <input type="text" name="phone" id="phone" value="{{ old('phone', $patientModel->phone ?? '') }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('phone') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="email">Email</label>
+        <input type="email" name="email" id="email" value="{{ old('email', $patientModel->email ?? '') }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('email') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="address_line">Adresse</label>
+        <input type="text" name="address_line" id="address_line" value="{{ old('address_line', $patientModel->address_line ?? '') }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('address_line') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div class="grid gap-6 md:grid-cols-2 md:col-span-1">
+        <div>
+            <label class="text-sm font-medium text-slate-600" for="village">Village</label>
+            <input type="text" name="village" id="village" value="{{ old('village', $patientModel->village ?? '') }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+            @error('village') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+        </div>
+        <div>
+            <label class="text-sm font-medium text-slate-600" for="district">District</label>
+            <input type="text" name="district" id="district" value="{{ old('district', $patientModel->district ?? '') }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+            @error('district') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+        </div>
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="region">Région</label>
+        <input type="text" name="region" id="region" value="{{ old('region', $patientModel->region ?? '') }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('region') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="emergency_contact_name">Contact d’urgence</label>
+        <input type="text" name="emergency_contact_name" id="emergency_contact_name" value="{{ old('emergency_contact_name', $patientModel->emergency_contact_name ?? '') }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('emergency_contact_name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="emergency_contact_phone">Téléphone d’urgence</label>
+        <input type="text" name="emergency_contact_phone" id="emergency_contact_phone" value="{{ old('emergency_contact_phone', $patientModel->emergency_contact_phone ?? '') }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('emergency_contact_phone') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div class="md:col-span-2">
+        <label class="text-sm font-medium text-slate-600" for="medical_history">Antécédents médicaux</label>
+        <textarea name="medical_history" id="medical_history" rows="3" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500">{{ old('medical_history', $patientModel->medical_history ?? '') }}</textarea>
+        @error('medical_history') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div class="md:col-span-2">
+        <label class="text-sm font-medium text-slate-600" for="psychosocial_notes">Notes psychosociales</label>
+        <textarea name="psychosocial_notes" id="psychosocial_notes" rows="3" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500">{{ old('psychosocial_notes', $patientModel->psychosocial_notes ?? '') }}</textarea>
+        @error('psychosocial_notes') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="status">Statut du cas</label>
+        <input type="text" name="status" id="status" value="{{ old('status', $patientModel->status ?? 'sous surveillance') }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('status') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="primary_agent_id">Référent DermaBus+</label>
+        <select name="primary_agent_id" id="primary_agent_id" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500">
+            <option value="">Non attribué</option>
+            @foreach ($agentOptions as $id => $name)
+                <option value="{{ $id }}" @selected(old('primary_agent_id', $patientModel->primary_agent_id ?? '') == $id)>{{ $name }}</option>
+            @endforeach
+        </select>
+        @error('primary_agent_id') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="registration_channel">Canal d’enregistrement</label>
+        <select name="registration_channel" id="registration_channel" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500">
+            @php
+                $channels = [
+                    'field_agent' => 'Agent communautaire',
+                    'mobile_clinic' => 'Clinique mobile DermaBus+',
+                    'self_registration' => 'Auto-inscription en ligne',
+                    'referral_partner' => 'Partenaire de référence',
+                ];
+            @endphp
+            <option value="">Sélectionner</option>
+            @foreach ($channels as $value => $label)
+                <option value="{{ $value }}" @selected(old('registration_channel', $patientModel->registration_channel ?? '') === $value)>{{ $label }}</option>
+            @endforeach
+        </select>
+        @error('registration_channel') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="is_self_registered">Auto-inscription</label>
+        <select name="is_self_registered" id="is_self_registered" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500">
+            <option value="0" @selected(old('is_self_registered', (int) ($patientModel->is_self_registered ?? 0)) === 0)>Non</option>
+            <option value="1" @selected(old('is_self_registered', (int) ($patientModel->is_self_registered ?? 0)) === 1)>Oui</option>
+        </select>
+        @error('is_self_registered') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="portal_enabled">Portail patient actif</label>
+        <select name="portal_enabled" id="portal_enabled" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500">
+            <option value="1" @selected(old('portal_enabled', (int) ($patientModel->portal_enabled ?? 1)) === 1)>Activé</option>
+            <option value="0" @selected(old('portal_enabled', (int) ($patientModel->portal_enabled ?? 1)) === 0)>Suspendu</option>
+        </select>
+        @error('portal_enabled') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="is_reintegrated">Réinsertion socio-économique</label>
+        <select name="is_reintegrated" id="is_reintegrated" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500">
+            <option value="0" @selected(old('is_reintegrated', (int) ($patientModel->is_reintegrated ?? 0)) === 0)>En cours</option>
+            <option value="1" @selected(old('is_reintegrated', (int) ($patientModel->is_reintegrated ?? 0)) === 1)>Réinséré(e)</option>
+        </select>
+        @error('is_reintegrated') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="reintegrated_at">Date de réinsertion</label>
+        <input type="date" name="reintegrated_at" id="reintegrated_at" value="{{ old('reintegrated_at', $patientModel?->reintegrated_at?->format('Y-m-d')) }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('reintegrated_at') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="consent_signed_at">Consentement recueilli le</label>
+        <input type="datetime-local" name="consent_signed_at" id="consent_signed_at" value="{{ old('consent_signed_at', optional($patientModel->consent_signed_at)->format('Y-m-d\TH:i')) }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('consent_signed_at') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="gps_latitude">Latitude GPS</label>
+        <input type="number" step="0.0000001" name="gps_latitude" id="gps_latitude" value="{{ old('gps_latitude', $patientModel->gps_latitude ?? '') }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('gps_latitude') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="gps_longitude">Longitude GPS</label>
+        <input type="number" step="0.0000001" name="gps_longitude" id="gps_longitude" value="{{ old('gps_longitude', $patientModel->gps_longitude ?? '') }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('gps_longitude') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div>
+        <label class="text-sm font-medium text-slate-600" for="preferred_language">Langue préférée</label>
+        <input type="text" name="preferred_language" id="preferred_language" value="{{ old('preferred_language', $patientModel->preferred_language ?? '') }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        @error('preferred_language') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div class="md:col-span-2">
+        <label class="text-sm font-medium text-slate-600" for="self_report_notes">Déclaration du patient</label>
+        <textarea name="self_report_notes" id="self_report_notes" rows="3" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500">{{ old('self_report_notes', $patientModel->self_report_notes ?? '') }}</textarea>
+        @error('self_report_notes') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+    <div class="md:col-span-2">
+        <label class="text-sm font-medium text-slate-600" for="care_plan">Plan de prise en charge</label>
+        <textarea name="care_plan" id="care_plan" rows="3" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500">{{ old('care_plan', $patientModel->care_plan ?? '') }}</textarea>
+        @error('care_plan') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+    </div>
+</div>
+
+<div class="mt-8 flex items-center justify-end gap-3">
+    <a href="{{ route('patients.index') }}" class="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100">Annuler</a>
+    <button type="submit" class="rounded-md bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-emerald-500">Enregistrer</button>
+</div>
