@@ -158,7 +158,7 @@
     </div>
     <div>
         <label class="text-sm font-medium text-slate-600" for="consent_signed_at">Consentement recueilli le</label>
-        <input type="datetime-local" name="consent_signed_at" id="consent_signed_at" value="{{ old('consent_signed_at', optional($patientModel->consent_signed_at)->format('Y-m-d\TH:i')) }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
+        <input type="datetime-local" name="consent_signed_at" id="consent_signed_at" value="{{ old('consent_signed_at', optional($patientModel?->consent_signed_at)->format('Y-m-d\TH:i')) }}" class="mt-1 w-full rounded-md border-slate-300 focus:border-emerald-500 focus:ring-emerald-500" />
         @error('consent_signed_at') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
     </div>
     <div>
